@@ -11,7 +11,6 @@ namespace :bower do
   task :install do
     queue %{
       echo "-----> Installing dependencies using Bower"
-      #{echo_cmd %[#{bower_bin}install:deployment #{bower_options}]}
     }
   end
 end
