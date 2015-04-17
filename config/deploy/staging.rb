@@ -1,7 +1,7 @@
 set :user, 'vagrant'
 set :domain, '192.168.33.13'
 set :deploy_to, '/var/www/railsapp'
-# set :repository, 'git@github.com:phanviet/rails-app.git'
+set :repository, 'git@github.com:phanviet/rails-app.git'
 set :branch, 'master'
 set :rails_env, 'production'
 set :group, 'vagrant'
