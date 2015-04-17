@@ -1,0 +1,12 @@
+set :user, 'vagrant'
+set :domain, '192.168.33.13'
+set :deploy_to, '/var/www/railsapp'
+# set :repository, 'git@github.com:phanviet/rails-app.git'
+set :branch, 'master'
+set :rails_env, 'production'
+set :group, 'vagrant'
+
+set :db_host    , '<%= ENV["DB_HOST"] %>'
+set :db_database, '<%= ENV["DB_DATABASE"] %>'
+set :db_username, '<%= ENV["DB_USERNAME"] %>'
+set :db_password, '<%= ENV["DB_PASSWORD"] %>'
