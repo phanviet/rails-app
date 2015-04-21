@@ -110,6 +110,7 @@ task :deploy => :environment do
     invoke :'bundle:install'
     # queue! %[#{rake} db:create]
     invoke :'rails:db_migrate'
+    # queue! %[#{rake} db:seed]
     invoke :'bower:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
