@@ -28,5 +28,7 @@ namespace :defaults do
     # set_default :unicorn_bin        , "#{deploy_to}/#{current_path}/bin/unicorn_rails"
     set_default :unicorn_user         , "#{user}"
     set_default :unicorn_group        , "#{group}"
+    # monit configs
+    set_default :unicorn_monit_path   , '/etc/monit/conf.d/unicorn.conf'
   end
 end

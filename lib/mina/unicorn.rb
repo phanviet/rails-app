@@ -10,7 +10,9 @@ namespace :unicorn do
   task :link do
     invoke :sudo
     queue 'echo "-----> Relocate unicorn script file"'
-    queue echo_cmd %{sudo cp "#{config_path}/unicorn.sh" "#{unicorn_script!}" && sudo chown #{unicorn_user}:#{unicorn_group} #{unicorn_script} && sudo chmod ugo+x #{unicorn_script} && sudo update-rc.d unicorn-#{app} defaults}
+    queue echo_cmd %{sudo cp "#{config_path}/unicorn.sh" "#{unicorn_script!}" && sudo chown #{unicorn_user}:#{unicorn_group} #{unicorn_script} && sudo chmod ugo+x #{unicorn_script}}
+    queue echo_cmd %{sudo cp "#{config_path}/unicorn.conf" "#{unicorn_monit_path}"}
+    # queue echo_cmd %{sudo cp "#{config_path}/unicorn.sh" "#{unicorn_script!}" && sudo chown #{unicorn_user}:#{unicorn_group} #{unicorn_script} && sudo chmod ugo+x #{unicorn_script} && sudo update-rc.d unicorn-#{app} defaults}
     queue check_ownership unicorn_user, unicorn_group, unicorn_script
   end
   # task :link do
@@ -21,7 +23,7 @@ namespace :unicorn do
   # end
 
   desc "Parses all Unicorn config files and uploads them to server"
-  task :upload => [:'upload:config', :'upload:script']
+  task :upload => [:'upload:config', :'upload:script', :'upload:monit']
 
   namespace :upload do
     desc "Parses Unicorn config file and uploads it to server"
@@ -32,6 +34,11 @@ namespace :unicorn do
     desc "Parses Unicorn control script file and uploads it to server"
     task :script do
       upload_template 'Unicorn control script', 'unicorn.sh', "#{config_path}/unicorn.sh"
+    end
+
+    desc "Parses Unicorn monit file and uploads it to server"
+    task :monit do
+      upload_template 'Unicorn monit', 'unicorn.conf', "#{config_path}/unicorn.conf"
     end
   end
 
@@ -60,18 +67,20 @@ namespace :unicorn do
     desc "#{action.capitalize} Unicorn"
     task action.to_sym => :environment do
       queue %{echo "-----> #{action.capitalize} Unicorn"}
-      queue echo_cmd "sudo service unicorn-#{app} #{action}"
+      queue echo_cmd "sudo monit #{action} unicorn"
+      # queue echo_cmd "sudo service unicorn-#{app} #{action}"
     end
   end
 
-  namespace :daemon do
-    desc "Create or remove unicorn daemon"
+  # namespace :daemon do
+  #   desc "Create or remove unicorn daemon"
 
-    task :remove => :'unicorn:stop' do
-      queue %{echo "-----> Removing Unicorn daemon..."}
-      queue echo_cmd "sudo update-rc.d -f unicorn-#{app} remove"
-    end
-  end
+  #   task :remove => :'unicorn:stop' do
+  #     queue %{echo "-----> Removing Unicorn daemon..."}
+  #     queue echo_cmd "sudo monit stop unicorn"
+  #     # queue echo_cmd "sudo update-rc.d -f unicorn-#{app} remove"
+  #   end
+  # end
 
   # %w(stop start restart).each do |action|
   #   desc "#{action.capitalize} Unicorn"

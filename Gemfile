@@ -27,6 +27,7 @@ gem 'pg', '~> 0.18.1'
 gem 'dotenv-rails', '~> 2.0.1'
 gem 'unicorn', '~> 4.8.3'
 gem "bower-rails", "~> 0.9.2"
+gem 'sunspot_rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -42,6 +43,7 @@ group :development do
   gem 'mina'
   gem 'mina-multistage', require: false
   gem 'mina-rsync', require: false
+  gem 'sunspot_solr'
 end
 
 group :development, :test do

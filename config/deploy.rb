@@ -15,6 +15,7 @@ require 'mina/db'
 require 'mina/nginx'
 require 'mina/unicorn'
 require 'mina/bower'
+require 'mina/monit'
 # Basic settings:
 #   domain       - The hostname to SSH to.
 #   deploy_to    - Path to deploy into.
@@ -92,6 +93,7 @@ task :setup => :environment do
   # update unicorn config
   invoke :'unicorn:update'
 
+  invoke :'monit:reload'
 end
 
 desc "Deploys the current version to the server."
@@ -106,6 +108,7 @@ task :deploy => :environment do
     # invoke :'rsync:deploy'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
+    # queue! %[#{rake} db:create]
     invoke :'rails:db_migrate'
     invoke :'bower:install'
     invoke :'rails:assets_precompile'
@@ -116,8 +119,7 @@ task :deploy => :environment do
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
 
       invoke :'nginx:restart'
-      invoke :'unicorn:stop'
-      invoke :'unicorn:start'
+      invoke :'unicorn:restart'
     end
   end
 end
