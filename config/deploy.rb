@@ -6,6 +6,7 @@ require 'mina/git'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/rsync'
+require 'mina/scp'
 
 # custom mina task
 require 'mina/defaults'
@@ -16,6 +17,7 @@ require 'mina/nginx'
 require 'mina/unicorn'
 require 'mina/bower'
 require 'mina/monit'
+require 'mina/solr'
 # Basic settings:
 #   domain       - The hostname to SSH to.
 #   deploy_to    - Path to deploy into.
@@ -93,6 +95,10 @@ task :setup => :environment do
   # update unicorn config
   invoke :'unicorn:update'
 
+  # update solr config
+  invoke :'solr:setup'
+  invoke :'solr:update'
+
   invoke :'monit:reload'
 end
 
@@ -110,6 +116,7 @@ task :deploy => :environment do
     invoke :'bundle:install'
     # queue! %[#{rake} db:create]
     invoke :'rails:db_migrate'
+    invoke :'solr:reindex'
     # queue! %[#{rake} db:seed]
     invoke :'bower:install'
     invoke :'rails:assets_precompile'
@@ -121,6 +128,7 @@ task :deploy => :environment do
 
       invoke :'nginx:restart'
       invoke :'unicorn:restart'
+      invoke :'solr:restart'
     end
   end
 end

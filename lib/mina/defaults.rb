@@ -5,6 +5,7 @@ namespace :defaults do
     set_default :app_path             , "#{deploy_to}/#{current_path}"
     set_default :config_path          , "#{deploy_to}/#{shared_path}/config"
     set_default :config_templates_path, "lib/mina/templates"
+    set_default :config_files_path    , "lib/mina/files"
     set_default :pids_path            , "#{deploy_to}/#{shared_path}/pids"
     set_default :sockets_path         , "#{deploy_to}/#{shared_path}/sockets"
     set_default :logs_path            , "#{deploy_to}/#{shared_path}/log"
@@ -30,5 +31,9 @@ namespace :defaults do
     set_default :unicorn_group        , "#{group}"
     # monit configs
     set_default :unicorn_monit_path   , '/etc/monit/conf.d/unicorn.conf'
+    # solr config
+    set_default :solr_data_dir        , "#{deploy_to}/#{shared_path}/solr"
+    set_default :solr_pid_file        , "#{pids_path}/solr.pid"
+    set_default :solr_log_file        , "#{logs_path}/solr.log"
   end
 end
