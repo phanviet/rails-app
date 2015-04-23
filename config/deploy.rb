@@ -6,7 +6,6 @@ require 'mina/git'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/rsync'
-require 'mina/scp'
 
 # custom mina task
 require 'mina/defaults'
@@ -98,6 +97,7 @@ task :setup => :environment do
   # update solr config
   invoke :'solr:setup'
   invoke :'solr:update'
+  invoke :'solr:restart'
 
   invoke :'monit:reload'
 end

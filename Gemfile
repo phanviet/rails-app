@@ -28,6 +28,7 @@ gem 'dotenv-rails', '~> 2.0.1'
 gem 'unicorn', '~> 4.8.3'
 gem "bower-rails", "~> 0.9.2"
 gem 'sunspot_rails', '~> 2.2.0'
+gem 'sunspot-rails-http-basic-auth', git: 'https://github.com/railsdog/sunspot-rails-http-basic-auth'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

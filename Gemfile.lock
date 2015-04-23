@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/railsdog/sunspot-rails-http-basic-auth
+  revision: 3563a8ba9fabda9a1fce71986dd2f1a5b9135666
+  specs:
+    sunspot-rails-http-basic-auth (0.0.2)
+      sunspot_rails (>= 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -201,6 +208,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
+  sunspot-rails-http-basic-auth!
   sunspot_rails (~> 2.2.0)
   sunspot_solr (~> 2.2.0)
   turbolinks

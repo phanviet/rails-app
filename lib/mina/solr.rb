@@ -1,12 +1,13 @@
 ###########################################################################
 # Solr Tasks
 ###########################################################################
+require 'mina/scp'
 
 namespace :solr do
   desc "Create configuration and other files"
   task :setup do
     queue 'echo "-----> Setup Solr"'
-    queue echo_cmd %[sudo chown -R #{user} "#{solr_data_dir}"]
+    queue echo_cmd %[sudo chown -R #{user}:#{group} "#{solr_data_dir}"]
     queue echo_cmd %[touch "#{solr_pid_file}"]
     queue echo_cmd %[touch "#{solr_log_file}"]
   end
@@ -16,7 +17,7 @@ namespace :solr do
 
   desc "Parses solr config file and uploads it to server"
   task :upload do
-    scp_upload "#{config_files_path}/solr/.", "#{solr_data_dir}"
+    scp_upload "#{config_files_path}/solr/.", "#{solr_data_dir}", recursively: true, verbose: true
   end
 
   task :reindex do
