@@ -32,8 +32,12 @@ namespace :defaults do
     # monit configs
     set_default :unicorn_monit_path   , '/etc/monit/conf.d/unicorn.conf'
     # solr config
+    set_default :solr_path            , '/opt/solr-4.6.1'
+    set_default :solr_web_app_path    , "#{solr_path}/example/solr-webapp/webapp/"
+    set_default :solr_web_config_path , "#{solr_path}/example/etc/"
     set_default :solr_data_dir        , "#{deploy_to}/#{shared_path}/solr"
     set_default :solr_pid_file        , "#{pids_path}/solr.pid"
     set_default :solr_log_file        , "#{logs_path}/solr.log"
+    set_default :sunspot_config       , "./config/sunspot.yml"
   end
 end

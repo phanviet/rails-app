@@ -13,11 +13,23 @@ namespace :solr do
   end
 
   desc "Upload solr config file"
-  task :update => [:upload]
+  task :update => [:upload, :link]
 
   desc "Parses solr config file and uploads it to server"
   task :upload do
+    upload_template 'realm properties', 'solr/realm.properties', "#{config_path}/realm.properties"
+    upload_template 'sunspot config', 'solr/sunspot.yml', "#{config_path}/sunspot.yml"
+    upload_template 'auth for admin page', 'solr/web.xml', "#{solr_web_app_path}/WEB-INF/web.xml"
+    upload_template 'realm config', 'solr/jetty.xml', "#{solr_web_config_path}/jetty.xml"
     scp_upload "#{config_files_path}/solr/.", "#{solr_data_dir}", recursively: true, verbose: true
+  end
+
+  desc "Symlink config file"
+  task :link do
+    queue %{echo "-----> Symlink sunspot config file"}
+    queue echo_cmd %{sudo rm -f "#{config_path}/sunspot.yml"}
+    queue echo_cmd %{sudo ln -fs "#{config_path}/sunspot.yml" "#{sunspot_config}"}
+    queue check_symlink sunspot_config
   end
 
   task :reindex do
