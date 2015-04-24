@@ -15,8 +15,6 @@
 # Remove from auto-start
 # sudo update-rc.d -f unicorn-<%= app %> remove
 
-instance $index
-
 RVM_ENV="ruby-2.1.5@<%= app %>"
 APP_NAME="<%= app %>"
 APP_PATH="<%= app_path %>"
@@ -27,8 +25,14 @@ RAILS_ENV=<%= rails_env %>
 RVM="source /usr/local/rvm/environments/$RVM_ENV"
 LOG="<%= sidekiq_log %>"
 PID="<%= sidekiq_pid %>"
+if [ "$2" ]
+  then
+    INDEX=$2
+  else
+    INDEX=0
+fi
 CMD="$RVM && cd $APP_PATH && bundle exec sidekiq"
-CMD_OPTS="-d -e $RAILS_ENV -C $CONFIG_PATH -i ${index} -P $PID -L $LOG"
+CMD_OPTS="-d -e $RAILS_ENV -C $CONFIG_PATH -i $INDEX -P $PID -L $LOG"
 
 NAME=`basename $0`
 DESC="Sikekiq for $APP_NAME"

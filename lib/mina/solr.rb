@@ -18,7 +18,7 @@ namespace :solr do
   task :upload => [:'upload:config', :'upload:auth', :'upload:collection']
 
   desc "Parses solr config file and uploads it to server"
-  task :upload do
+  namespace :upload do
     desc "Parses Sunspot config file and uploads it to server"
     task :config do
       upload_template 'sunspot config', 'sunspot.yml', "#{config_path}/sunspot.yml"

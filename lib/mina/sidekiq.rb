@@ -4,6 +4,7 @@
 require 'mina/scp'
 
 namespace :sidekiq do
+
   desc "Upload and update (link) all Sidekiq config files"
   task :update => [:upload, :link]
 

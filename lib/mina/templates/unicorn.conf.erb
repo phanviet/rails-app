@@ -1,4 +1,4 @@
-check process unicorn with pidfile <%= unicorn_pid %>
+check process unicorn-<%= app %> with pidfile <%= unicorn_pid %>
   start program "/etc/init.d/unicorn-<%= app %> start"
   stop program "/etc/init.d/unicorn-<%= app %> stop"
   if 5 restarts within 5 cycles then timeout

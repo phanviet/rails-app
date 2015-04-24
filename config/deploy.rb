@@ -17,6 +17,7 @@ require 'mina/unicorn'
 require 'mina/bower'
 require 'mina/monit'
 require 'mina/solr'
+require 'mina/sidekiq'
 # Basic settings:
 #   domain       - The hostname to SSH to.
 #   deploy_to    - Path to deploy into.
@@ -99,6 +100,9 @@ task :setup => :environment do
   invoke :'solr:update'
   invoke :'solr:restart'
 
+  # update sidekiq config
+  invoke :'sidekiq:update'
+
   invoke :'monit:reload'
 end
 
@@ -129,6 +133,7 @@ task :deploy => :environment do
       invoke :'nginx:restart'
       invoke :'unicorn:restart'
       invoke :'solr:restart'
+      invoke :'sidekiq:restart'
     end
   end
 end

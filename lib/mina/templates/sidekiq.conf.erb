@@ -1,0 +1,4 @@
+check process sidekiq-<%= app %> with pidfile <%= sidekiq_pid %>
+  start program "/etc/init.d/sidekiq-<%= app %> start 0"
+  stop program "/etc/init.d/sidekiq-<%= app %> stop 0"
+  if 5 restarts within 5 cycles then timeout
