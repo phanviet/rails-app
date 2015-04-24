@@ -30,14 +30,23 @@ namespace :defaults do
     set_default :unicorn_user         , "#{user}"
     set_default :unicorn_group        , "#{group}"
     # monit configs
-    set_default :unicorn_monit_path   , '/etc/monit/conf.d/unicorn.conf'
+    set_default :monit_path           , "/etc/monit/conf.d"
+    set_default :unicorn_monit_path   , "#{monit_path}/unicorn-#{app}.conf"
+    set_default :sidekiq_monit_path   , "#{monit_path}/sidekiq-#{app}.conf"
     # solr config
-    set_default :solr_path            , '/opt/solr-4.6.1'
-    set_default :solr_web_app_path    , "#{solr_path}/example/solr-webapp/webapp/"
-    set_default :solr_web_config_path , "#{solr_path}/example/etc/"
+    set_default :solr_installed_path  , '/opt/solr-4.6.1'
+    set_default :solr_web_app_path    , "#{solr_installed_path}/example/solr-webapp/webapp"
+    set_default :solr_web_config_path , "#{solr_installed_path}/example/etc/"
     set_default :solr_data_dir        , "#{deploy_to}/#{shared_path}/solr"
     set_default :solr_pid_file        , "#{pids_path}/solr.pid"
     set_default :solr_log_file        , "#{logs_path}/solr.log"
-    set_default :sunspot_config       , "./config/sunspot.yml"
+    set_default :solr_auth            , "/etc/realm.properties"
+    # sidekiq config
+    set_default :sidekiq_config       , "#{config_path}/sidekiq.yml"
+    set_default :sidekiq_log          , "#{logs_path}/sidekiq.log"
+    set_default :sidekiq_pid          , "#{pids_path}/sidekiq.pid"
+    set_default :sidekiq_script       , "#{services_path!}/sidekiq-#{app!}"
+    set_default :sidekiq_user         , "#{user}"
+    set_default :sidekiq_group        , "#{group}"
   end
 end

@@ -67,7 +67,7 @@ namespace :unicorn do
     desc "#{action.capitalize} Unicorn"
     task action.to_sym => :environment do
       queue %{echo "-----> #{action.capitalize} Unicorn"}
-      queue echo_cmd "sudo monit #{action} unicorn"
+      queue echo_cmd "sudo monit #{action} unicorn-#{app}"
       # queue echo_cmd "sudo service unicorn-#{app} #{action}"
     end
   end

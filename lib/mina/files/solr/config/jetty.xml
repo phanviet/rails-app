@@ -28,7 +28,7 @@
     <Arg>
         <New class="org.eclipse.jetty.security.HashLoginService">
         <Set name="name">Auth</Set>
-        <Set name="config"><SystemProperty name="jetty.home" default="."/><%= config_path + '/realm.properties' %></Set>
+        <Set name="config"><SystemProperty name="jetty.home" default="."/>/etc/realm.properties</Set>
         <Set name="refreshInterval">0</Set>
       </New>
     </Arg>

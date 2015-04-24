@@ -32,7 +32,7 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 # set :term_mode, nil
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log', '.env']
+set :shared_paths, ['config/database.yml', 'log', '.env', 'config/sunspot.yml']
 
 set :rsync_options, %w[
   --recursive --delete --delete-excluded

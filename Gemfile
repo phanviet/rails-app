@@ -29,6 +29,7 @@ gem 'unicorn', '~> 4.8.3'
 gem "bower-rails", "~> 0.9.2"
 gem 'sunspot_rails', '~> 2.2.0'
 gem 'sunspot-rails-http-basic-auth', git: 'https://github.com/railsdog/sunspot-rails-http-basic-auth'
+gem 'sidekiq'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
