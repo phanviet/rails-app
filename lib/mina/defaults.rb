@@ -22,6 +22,8 @@ namespace :defaults do
     # Unicorn configs
     set_default :unicorn_socket       , "#{sockets_path}/unicorn.sock"
     set_default :unicorn_pid          , "#{pids_path}/unicorn.pid"
+    set_default :unicorn_log          , "#{logs_path}/unicorn.log"
+    set_default :unicorn_error_log    , "#{logs_path}/unicorn.error.log"
     set_default :unicorn_config       , "#{config_path}/unicorn.rb"
     set_default :unicorn_script       , "#{services_path!}/unicorn-#{app!}"
     set_default :unicorn_workers      , 4
@@ -33,6 +35,7 @@ namespace :defaults do
     set_default :monit_path           , "/etc/monit/conf.d"
     set_default :unicorn_monit_path   , "#{monit_path}/unicorn-#{app}.conf"
     set_default :sidekiq_monit_path   , "#{monit_path}/sidekiq-#{app}.conf"
+    set_default :puma_monit_path      , "#{monit_path}/puma-#{app}.conf"
     # solr config
     set_default :solr_installed_path  , '/opt/solr-4.6.1'
     set_default :solr_web_app_path    , "#{solr_installed_path}/example/solr-webapp/webapp"
@@ -48,5 +51,15 @@ namespace :defaults do
     set_default :sidekiq_script       , "#{services_path!}/sidekiq-#{app!}"
     set_default :sidekiq_user         , "#{user}"
     set_default :sidekiq_group        , "#{group}"
+    # puma config
+    set_default :puma_socket          , "#{sockets_path}/puma.sock"
+    set_default :puma_pid             , "#{pids_path}/puma.pid"
+    set_default :puma_log             , "#{logs_path}/puma.log"
+    set_default :puma_workers         , 2
+    set_default :puma_threads         , 5
+    set_default :puma_user            , "#{user}"
+    set_default :puma_group           , "#{group}"
+    set_default :puma_script          , "#{services_path!}/puma-#{app!}"
+    set_default :puma_config          , "#{config_path}/puma.rb"
   end
 end

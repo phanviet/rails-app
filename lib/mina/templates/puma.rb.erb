@@ -1,0 +1,15 @@
+environment "<%= rails_env %>"
+
+socket_file = "<%= puma_socket %>"
+pid_file    = "<%= puma_pid %>"
+log_file    = "<%= puma_log %>"
+
+workers Integer(<%= puma_workers %>)
+threads_count = Integer(<%= puma_threads %>)
+threads threads_count, threads_count
+
+bind  "unix://#{socket_file}"
+pidfile "#{pid_file}"
+state_path "#{log_file}"
+
+activate_control_app

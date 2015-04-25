@@ -18,6 +18,7 @@ require 'mina/bower'
 require 'mina/monit'
 require 'mina/solr'
 require 'mina/sidekiq'
+require 'mina/puma'
 # Basic settings:
 #   domain       - The hostname to SSH to.
 #   deploy_to    - Path to deploy into.
@@ -33,7 +34,7 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 # set :term_mode, nil
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log', '.env', 'config/sunspot.yml']
+set :shared_paths, ['config/database.yml', 'log', '.env', 'config/sunspot.yml', 'config/sidekiq.yml']
 
 set :rsync_options, %w[
   --recursive --delete --delete-excluded
@@ -93,7 +94,10 @@ task :setup => :environment do
   invoke :'nginx:update'
 
   # update unicorn config
-  invoke :'unicorn:update'
+  # invoke :'unicorn:update'
+
+  # update puma config
+  invoke :'puma:update'
 
   # update solr config
   invoke :'solr:setup'
@@ -131,7 +135,8 @@ task :deploy => :environment do
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
 
       invoke :'nginx:restart'
-      invoke :'unicorn:restart'
+      # invoke :'unicorn:restart'
+      invoke :'puma:restart'
       invoke :'solr:restart'
       invoke :'sidekiq:restart'
     end

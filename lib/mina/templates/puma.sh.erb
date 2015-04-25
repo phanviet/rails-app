@@ -3,24 +3,18 @@
 RVM_ENV="ruby-2.1.5@<%= app %>"
 APP_NAME="<%= app %>"
 APP_PATH="<%= app_path %>"
-CONFIG_PATH=<%= sidekiq_config %>
+CONFIG_PATH=<%= puma_config %>
 EUSER="<%= user %>"
 RAILS_ENV=<%= rails_env %>
 
 RVM="source /usr/local/rvm/environments/$RVM_ENV"
-LOG="<%= sidekiq_log %>"
-PID="<%= sidekiq_pid %>"
-if [ "$2" ]
-  then
-    INDEX=$2
-  else
-    INDEX=0
-fi
-CMD="$RVM && cd $APP_PATH && bundle exec sidekiq"
-CMD_OPTS="-d -e $RAILS_ENV -C $CONFIG_PATH -i $INDEX -P $PID -L $LOG"
+
+CMD="$RVM && cd $APP_PATH && bundle exec puma"
+CMD_OPTS="-c <%= puma_config %>"
+PID="<%= puma_pid %>"
 
 NAME=`basename $0`
-DESC="Sikekiq for $APP_NAME"
+DESC="Puma app for $APP_NAME"
 
 case "$1" in
   start)

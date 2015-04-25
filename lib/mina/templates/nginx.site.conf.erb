@@ -3,7 +3,7 @@ address_is_ip = !nginx_server_name.match(/\A\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z
 %>
 
 upstream <%= app %>_app_server {
-  server unix:<%= unicorn_socket %> fail_timeout=0;
+  server unix:<%= puma_socket %> fail_timeout=0;
 }
 
 server {
@@ -21,14 +21,10 @@ server {
   try_files $uri @rails;
 
   location @rails {
-    proxy_pass http://<%= app %>_app_server;
-    proxy_set_header X-FORWARDED_PROTO https;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header Host $http_host;
     proxy_redirect off;
-    proxy_intercept_errors on;
-    expires -1;
+    proxy_pass http://<%= app %>_app_server;
   }
 
   error_page 500 502 503 504 /500.html;
