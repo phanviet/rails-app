@@ -10,7 +10,7 @@ RAILS_ENV=<%= rails_env %>
 RVM="source /usr/local/rvm/environments/$RVM_ENV"
 
 CMD="$RVM && cd $APP_PATH && bundle exec puma"
-CMD_OPTS="-c <%= puma_config %>"
+CMD_OPTS="-C <%= puma_config %>"
 PID="<%= puma_pid %>"
 
 NAME=`basename $0`

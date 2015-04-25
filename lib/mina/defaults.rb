@@ -55,6 +55,8 @@ namespace :defaults do
     set_default :puma_socket          , "#{sockets_path}/puma.sock"
     set_default :puma_pid             , "#{pids_path}/puma.pid"
     set_default :puma_log             , "#{logs_path}/puma.log"
+    set_default :puma_state           , "#{logs_path}/puma.state"
+    set_default :puma_error_log       , "#{logs_path}/puma.error.log"
     set_default :puma_workers         , 2
     set_default :puma_threads         , 5
     set_default :puma_user            , "#{user}"
