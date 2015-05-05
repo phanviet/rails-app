@@ -28,6 +28,8 @@ require 'mina/puma'
 set :app          , 'railsapp'
 set :deploy_to    , "/var/www/#{app}"
 
+set :identity_file, 'vagrant.pem'
+
 invoke :'defaults:configs'
 # For system-wide RVM install.
 set :rvm_path, '/usr/local/rvm/bin/rvm'
