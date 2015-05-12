@@ -43,7 +43,7 @@ namespace :defaults do
     set_default :solr_data_dir        , "#{deploy_to}/#{shared_path}/solr"
     set_default :solr_pid_file        , "#{pids_path}/solr.pid"
     set_default :solr_log_file        , "#{logs_path}/solr.log"
-    set_default :solr_auth            , "/etc/realm.properties"
+    set_default :solr_auth            , "#{solr_web_config_path}/realm.properties"
     # sidekiq config
     set_default :sidekiq_config       , "#{config_path}/sidekiq.yml"
     set_default :sidekiq_log          , "#{logs_path}/sidekiq.log"
